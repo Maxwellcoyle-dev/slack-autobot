@@ -1,8 +1,6 @@
 import { WebClient } from "@slack/web-api";
-import dotenv from "dotenv";
-dotenv.config();
 
-import { getSecret } from "../utilities/getSecret.mjs";
+import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
 import { homeViewTemplate } from "./homeViewTemplate.mjs";
 
 export const homeViewPublisher = async (userId, recordingsList) => {
