@@ -28,7 +28,7 @@ Resources:
           SLACK_EVENT_CALLBACK_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/slack-event-callback
           SLACK_BLOCK_ACTION_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/slack-block-action
           ZOOM_USER_ID: max.henderson@trainicity.com
-          SLACK_BOT_TOKEN: xoxb-747234097457-6203590755877-PpzNSph7vaKS10LHoUXl7GSr
+          SLACK_BOT_TOKEN: xoxb-747234097457-6203590755877-XVURI3LPuMlbIzOsuhL4uFnX
   SlackEventCallbackHandlerFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -51,7 +51,7 @@ Resources:
           ZOOM_LIST_RECORDINGS_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/list-recordings
           TRANSCRIPT_HANDLER_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/transcript-handler
           ZOOM_USER_ID: max.henderson@trainicity.com
-          SLACK_BOT_TOKEN: xoxb-747234097457-6203590755877-PpzNSph7vaKS10LHoUXl7GSr
+          SLACK_BOT_TOKEN: xoxb-747234097457-6203590755877-XVURI3LPuMlbIzOsuhL4uFnX
   SlackBlockActionHandlerFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -74,7 +74,8 @@ Resources:
           ZOOM_LIST_RECORDINGS_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/list-recordings
           TRANSCRIPT_HANDLER_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/transcript-handler
           ZOOM_USER_ID: max.henderson@trainicity.com
-          SLACK_BOT_TOKEN: xoxb-747234097457-6203590755877-PpzNSph7vaKS10LHoUXl7GSr
+          SLACK_BOT_TOKEN: xoxb-747234097457-6203590755877-XVURI3LPuMlbIzOsuhL4uFnX
+
   TranscriptHandlerFunction:
     Type: AWS::Serverless::Function
     Properties:
