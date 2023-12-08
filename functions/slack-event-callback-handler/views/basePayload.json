@@ -1,0 +1,165 @@
+{
+  "blocks": [
+    {
+      "type": "header",
+      "text": {
+        "type": "plain_text",
+        "text": "Slack Autobot",
+        "emoji": true
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "plain_text",
+        "text": "Combine your Zoom call recordings with the power of AI.",
+        "emoji": true
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": ":calendar: *Select Zoom Meeting Date Range*"
+      }
+    },
+    {
+      "type": "actions",
+      "elements": [
+        {
+          "type": "datepicker",
+          "initial_date": "1990-04-28",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Select a date",
+            "emoji": true
+          },
+          "action_id": "actionId-0"
+        },
+        {
+          "type": "datepicker",
+          "initial_date": "1990-04-28",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Select a date",
+            "emoji": true
+          },
+          "action_id": "actionId-1"
+        },
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Search",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "action_id": "actionId-3"
+        }
+      ]
+    },
+    {
+      "type": "divider"
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": "*Meeting Name*"
+      }
+    },
+    {
+      "type": "section",
+      "text": {
+        "type": "plain_text",
+        "text": "Date + Start Time",
+        "emoji": true
+      }
+    },
+    {
+      "type": "actions",
+      "elements": [
+        {
+          "type": "static_select",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Select Meeting Type",
+            "emoji": true
+          },
+          "options": [
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "*this is plain_text text*",
+                "emoji": true
+              },
+              "value": "value-0"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "*this is plain_text text*",
+                "emoji": true
+              },
+              "value": "value-1"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "*this is plain_text text*",
+                "emoji": true
+              },
+              "value": "value-2"
+            }
+          ],
+          "action_id": "static_select-action_01"
+        },
+        {
+          "type": "static_select",
+          "placeholder": {
+            "type": "plain_text",
+            "text": "Select Analysis Type",
+            "emoji": true
+          },
+          "options": [
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "*this is plain_text text*",
+                "emoji": true
+              },
+              "value": "value-0"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "*this is plain_text text*",
+                "emoji": true
+              },
+              "value": "value-1"
+            },
+            {
+              "text": {
+                "type": "plain_text",
+                "text": "*this is plain_text text*",
+                "emoji": true
+              },
+              "value": "value-2"
+            }
+          ],
+          "action_id": "static_select-action_02"
+        },
+        {
+          "type": "button",
+          "text": {
+            "type": "plain_text",
+            "text": "Start",
+            "emoji": true
+          },
+          "value": "click_me_123",
+          "action_id": "actionId-0"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "get-recent-meetings-handler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.mjs",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.451.0",
+    "axios": "^1.6.2"
+  }
+}
