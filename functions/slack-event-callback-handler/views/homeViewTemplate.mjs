@@ -97,12 +97,12 @@ export const homeViewTemplate = (meetingsList) => {
   try {
     meetingsList.forEach((meeting) => {
       // Values from the meeting object
-      const meetingUuid = meeting.meetingUuid;
-      const meetingId = meeting.meetingId;
-      const meetingTopic = meeting.meetingTopic;
-      const downloadUrl = meeting.downloadUrl;
-      const meetingDuration = meeting.meetingDuration;
-      const startTime = meeting.startTime;
+      const meetingUuid = meeting.uuid;
+      const meetingId = meeting.id;
+      const meetingTopic = meeting.topic;
+      const downloadUrl = meeting.recording_files[0].download_url;
+      const meetingDuration = meeting.duration;
+      const startTime = meeting.start_time;
 
       // Call formatData to format the date and time of the meeting
       const formattedDate = formatData(startTime);

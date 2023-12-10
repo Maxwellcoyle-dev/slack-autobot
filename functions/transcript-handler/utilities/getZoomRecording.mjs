@@ -5,10 +5,7 @@ const ZOOM_DOWNLOAD_FILE_ENDPOINT = process.env.ZOOM_DOWNLOAD_FILE_ENDPOINT;
 export const getZoomRecording = async (downloadUrl) => {
   console.log("ZOOM_DOWNLOAD_RECORDING_URL --- ", ZOOM_DOWNLOAD_FILE_ENDPOINT);
   try {
-    console.log("downloadRecording payload --- ", {
-      downloadUrl,
-      eventType: "download-recording-transcript",
-    });
+    console.log("downloadUrl --- ", downloadUrl);
     // get transcript from zoom-request-handler with an axios request
     const response = await axios.post(ZOOM_DOWNLOAD_FILE_ENDPOINT, {
       downloadUrl,
