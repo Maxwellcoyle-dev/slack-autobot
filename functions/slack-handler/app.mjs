@@ -8,8 +8,6 @@ import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
 
 const SLACK_EVENT_CALLBACK_ENDPOINT = process.env.SLACK_EVENT_CALLBACK_ENDPOINT;
 const SLACK_BLOCK_ACTION_ENDPOINT = process.env.SLACK_BLOCK_ACTION_ENDPOINT;
-const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
-const web = new WebClient(SLACK_BOT_TOKEN);
 
 export const lambdaHandler = async (event) => {
   console.log("SLACK HANDLER TRIGGERED BY EVENT --- ", event);

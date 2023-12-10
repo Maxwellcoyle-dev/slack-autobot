@@ -5,9 +5,6 @@
 ### Linux ###
 *~
 
-# sam template with env variables and local build artifacts
-template.yaml
-
 # temporary files which can be created if a process still has a handle open of a deleted file
 .fuse_hidden*
 

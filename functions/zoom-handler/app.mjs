@@ -1,7 +1,8 @@
 import { listUserRecordings } from "./utilities/listUserRecordings.mjs";
 import { downloadFile } from "./utilities/downloadFile.mjs";
-import { getSecret } from "./utilities/getSecret.mjs";
 import { getOathToken } from "./utilities/getOathToken.mjs";
+
+import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
 
 // INCOMING PAYLOAD
 // {

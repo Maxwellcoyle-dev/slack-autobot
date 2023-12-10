@@ -2,7 +2,7 @@ import { OpenAI } from "langchain/llms/openai";
 import { PromptTemplate } from "langchain/prompts";
 import { LLMChain } from "langchain/chains";
 
-import { getSecret } from "./getSecret.mjs";
+import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
 
 import { analyzeTranscriptPromptTemplate } from "../prompt-templates/analyzeTranscriptPromptTemplate.mjs";
 import {

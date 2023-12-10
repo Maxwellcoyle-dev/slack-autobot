@@ -1,8 +1,6 @@
-import axios from "axios";
 import { WebClient } from "@slack/web-api";
 
-const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
-const slackClient = new WebClient(SLACK_BOT_TOKEN);
+import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
 
 export const sendToSlack = async (
   message,
@@ -11,6 +9,14 @@ export const sendToSlack = async (
   analysisType
 ) => {
   try {
+    // get token from aws secret manager
+    const newToken = await getSecret(
+      "dev/slack-automation-app/slack-bot-token"
+    );
+    const SLACK_BOT_TOKEN = newToken.SLACK_BOT_TOKEN;
+    // create slack client
+    const slackClient = new WebClient(SLACK_BOT_TOKEN);
+
     const response = await slackClient.chat.postMessage({
       channel: "autobot-testing",
       text: `*${topic}*\nMEETING TYPE: ${meetingType}\nANALYSIS TYPE: ${analysisType}\n\n${message}`,
