@@ -1,4 +1,8 @@
 import axios from "axios";
+import { WebClient } from "@slack/web-api";
+
+const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
+const slackClient = new WebClient(SLACK_BOT_TOKEN);
 
 export const sendToSlack = async (
   message,
@@ -6,21 +10,11 @@ export const sendToSlack = async (
   meetingType,
   analysisType
 ) => {
-  const slackWebhookUrl =
-    "https://hooks.slack.com/services/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";
-
   try {
-    const response = await axios.post(
-      slackWebhookUrl,
-      {
-        text: `*${topic}*\nMEETING TYPE: ${meetingType}\nANALYSIS TYPE: ${analysisType}\n\n${message}`,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await slackClient.chat.postMessage({
+      channel: "autobot-testing",
+      text: `*${topic}*\nMEETING TYPE: ${meetingType}\nANALYSIS TYPE: ${analysisType}\n\n${message}`,
+    });
     console.log("response", response);
     return response;
   } catch (error) {

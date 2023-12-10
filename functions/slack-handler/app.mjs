@@ -20,9 +20,16 @@ export const lambdaHandler = async (event) => {
   // Check if the Slack Event is an action with action_type = static_select
   // If yes, return a success to Slack + exit the function
   if (eventType === "block_actions") {
-    const actionEventType = eventBody.actions[0]?.type; // Get the type of Slack Event
-    if (actionEventType === "static_select") {
-      console.log("return success for actionEventType --- ", actionEventType);
+    const blockActionType = eventBody.actions[0]?.type; // Get the type of Slack Event
+    if (blockActionType === "static_select") {
+      console.log("return success for actionEventType --- ", blockActionType);
+      // return a sucess to slack
+      return {
+        statusCode: 200,
+        body: "",
+      };
+    } else if (actionEventType === "button") {
+      console.log("return success for actionEventType --- ", blockActionType);
       // return a sucess to slack
       return {
         statusCode: 200,
@@ -58,21 +65,20 @@ export const lambdaHandler = async (event) => {
       case "event_callback":
         console.log("EVENT CALLBACK CASE MET");
         axios.post(SLACK_EVENT_CALLBACK_ENDPOINT, eventBody);
+        return {
+          statusCode: 200,
+          body: "slack handler event callback success message. eventBody sent to slack-event-callback-handler-function",
+        };
 
         break;
       case "block_actions":
         console.log("BLOCK ACTIONS CASE MET");
         // Asynchronously handle the blockAction
         axios.post(SLACK_BLOCK_ACTION_ENDPOINT, eventBody);
-        // Immediately respond to Slack
-        await web.chat.postMessage({
-          channel: userId, // or appropriate channel/user
-          text: "Processing your transcript request. I'll notify you once it's ready!",
-        });
 
         return {
           statusCode: 200,
-          body: "",
+          body: "slack handler block action success message. eventBody sent to slack-block-action-handler-function",
         };
         break;
       default:

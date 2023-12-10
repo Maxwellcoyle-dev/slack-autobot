@@ -103,12 +103,18 @@ export const lambdaHandler = async (event) => {
         };
     }
   } catch (error) {
-    console.log(error);
+    console.error("Error encountered in lambdaHandler", {
+      errorMessage: error.message,
+      stack: error.stack,
+      event, // Log the original event for context
+      // You can add more context here if necessary
+    });
+
+    // Return a generic error message to the client
     return {
       statusCode: 500,
       body: JSON.stringify({
         message: "Internal server error",
-        error: error.message, // Optionally include error details
       }),
     };
   }
