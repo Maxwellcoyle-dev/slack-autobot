@@ -1,12 +1,15 @@
 import { WebClient } from "@slack/web-api";
 
 import { modalViewTemplate } from "../modalViewTemplate.mjs";
-
-const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
-const slackClient = new WebClient(SLACK_BOT_TOKEN);
+import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
 
 export const blockActionHandler = async (payload) => {
   console.log("ACTION HANDLER - BODY --- ", payload);
+
+  // Get the Slack Bot Token from AWS Secrets Manager
+  const newToken = await getSecret("dev/slack-automation-app/slack-bot-token");
+  const SLACK_BOT_TOKEN = newToken.SLACK_BOT_TOKEN;
+  const slackClient = new WebClient(SLACK_BOT_TOKEN);
 
   // get the actionValuePayload
   const actionValuePayload = JSON.parse(payload.actions[0].value);

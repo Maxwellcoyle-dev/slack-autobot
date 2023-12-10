@@ -3,11 +3,12 @@ import { WebClient } from "@slack/web-api";
 import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
 import { homeViewTemplate } from "./homeViewTemplate.mjs";
 
-const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
-
 export const homeViewPublisher = async (userId, recordingsList) => {
   console.log("homeViewPublisher RECORDINGS VALUE CHECK", recordingsList);
 
+  // Get the Slack Bot Token from AWS Secrets Manager
+  const newToken = await getSecret("dev/slack-automation-app/slack-bot-token");
+  const SLACK_BOT_TOKEN = newToken.SLACK_BOT_TOKEN;
   // creeate a slack client
   const slackClient = new WebClient(SLACK_BOT_TOKEN);
 

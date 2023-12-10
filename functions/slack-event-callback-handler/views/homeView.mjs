@@ -5,10 +5,12 @@ dotenv.config();
 import { getSecret } from "../utilities/getSecret.mjs";
 import { listRecordings } from "../utilities/listRecordings.mjs";
 
-const newToken = await getSecret("dev/slack-automation-app/slack-token");
-const token = newToken.SLACK_TOKEN;
+// get the slack bot token from AWS Secrets Manager
+const newToken = await getSecret("dev/slack-automation-app/slack-bot-token");
+const SLACK_BOT_TOKEN = newToken.SLACK_BOT_TOKEN;
 
-const slackClient = new WebClient(token);
+// create a slack client
+const slackClient = new WebClient(SLACK_BOT_TOKEN);
 
 export const publishHomeView = async (userId) => {
   const recordingsPayload = await listRecordings();

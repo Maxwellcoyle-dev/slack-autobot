@@ -1,8 +1,9 @@
 import { listRecordings } from "../utilities/listRecordings.mjs";
 import { homeViewPublisher } from "../views/homeViewPublisher.mjs";
 
+const ZOOM_USER_ID = process.env.ZOOM_USER_ID;
+
 export const eventCallbackHandler = async (userId) => {
-  const ZOOM_USER_ID = process.env.ZOOM_USER_ID;
   // get the initial list of call recordings
   const listRecordingsResponse = await listRecordings(ZOOM_USER_ID);
   console.log(

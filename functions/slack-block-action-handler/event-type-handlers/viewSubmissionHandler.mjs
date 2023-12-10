@@ -1,9 +1,9 @@
 import axios from "axios";
 import { WebClient } from "@slack/web-api";
 
+import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
+
 const TRANSCRIPT_HANDLER_URL = process.env.TRANSCRIPT_HANDLER_ENDPOINT;
-const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
-const slackClient = new WebClient(SLACK_BOT_TOKEN);
 
 export const viewSubmissionHandler = async (payload) => {
   try {
@@ -13,6 +13,14 @@ export const viewSubmissionHandler = async (payload) => {
 
     // Call the transcript handler
     axios.post(TRANSCRIPT_HANDLER_URL, transcriptPayload);
+
+    // Get the Slack Bot Token from AWS Secrets Manager
+    const newToken = await getSecret(
+      "dev/slack-automation-app/slack-bot-token"
+    );
+    const SLACK_BOT_TOKEN = newToken.SLACK_BOT_TOKEN;
+    // creeate a slack client with the bot token
+    const slackClient = new WebClient(SLACK_BOT_TOKEN);
 
     // Notify the user that processing has started
     await slackClient.chat
