@@ -16,7 +16,6 @@ Here is the call transcript:
 Final Instructions:
 - Please be as thorough as possible. 
 - If you don't know something, do not make it up. Just let me know that you don't know or that somethig is unclear to you.
-- craft your response in mrkdwn format for a slack message.
 
 Assistant Response: 
 `;

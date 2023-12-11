@@ -9,6 +9,7 @@ export const lambdaHandler = async (event) => {
     const payload = JSON.parse(event.body);
     console.log("Received body:", payload);
 
+    const slackUserId = payload.slackUserId; // The Slack user ID from the payload
     const downloadUrl = payload.downloadUrl; // The URL of the recording to download from the payload
     const meetingTopic = payload?.meetingTopic; // The topic of the meeting from the payload
     const meetingType = payload?.meetingType; // The type of meeting from the payload
@@ -50,6 +51,7 @@ export const lambdaHandler = async (event) => {
 
     // send the result of the openAI prompt + the meeting topic to a Slack Channel
     await sendToSlack(
+      slackUserId,
       openAIResult.text,
       meetingTopic,
       meetingType,

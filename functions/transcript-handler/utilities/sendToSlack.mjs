@@ -3,6 +3,7 @@ import { WebClient } from "@slack/web-api";
 import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
 
 export const sendToSlack = async (
+  slackUserId,
   message,
   topic,
   meetingType,
@@ -18,7 +19,7 @@ export const sendToSlack = async (
     const slackClient = new WebClient(SLACK_BOT_TOKEN);
 
     const response = await slackClient.chat.postMessage({
-      channel: "autobot-testing",
+      channel: slackUserId,
       text: `*${topic}*\nMEETING TYPE: ${meetingType}\nANALYSIS TYPE: ${analysisType}\n\n${message}`,
     });
     console.log("response", response);
