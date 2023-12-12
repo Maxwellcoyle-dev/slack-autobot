@@ -1,5 +1,5 @@
 import { listRecordings } from "./utilities/listRecordings.mjs";
-import { getUserEmail } from "./utilities/getSlackUser.mjs";
+import { getUserEmail } from "/opt/nodejs/utilities/getSlackUser.mjs";
 
 import { homeViewPublisher } from "./views/homeViewPublisher.mjs";
 
@@ -30,6 +30,7 @@ export const lambdaHandler = async (event) => {
     };
   } catch (error) {
     console.log("ERROR --- ", error);
+
     throw new Error(error);
   }
 };

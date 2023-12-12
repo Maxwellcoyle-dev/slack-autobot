@@ -1,6 +1,5 @@
 import axios from "axios";
 import querystring from "querystring";
-import { WebClient } from "@slack/web-api";
 
 // Utilities
 import { validateSlackRequest } from "/opt/nodejs/utilities/security.mjs";
@@ -62,13 +61,22 @@ export const lambdaHandler = async (event) => {
     switch (eventType) {
       case "event_callback":
         console.log("EVENT CALLBACK CASE MET");
-        axios.post(SLACK_EVENT_CALLBACK_ENDPOINT, eventBody);
+        console.log("EVENT CALLBACK CASE MET - eventBody --- ", eventBody);
+        try {
+          await axios.post(SLACK_EVENT_CALLBACK_ENDPOINT, eventBody);
+        } catch (error) {
+          console.error("Slack API Error:", error);
+
+          // Check if the error data has response_metadata
+          if (error.data && error.data.response_metadata) {
+            console.log("Response Metadata:", error.data.response_metadata);
+          }
+        }
         return {
           statusCode: 200,
           body: "slack handler event callback success message. eventBody sent to slack-event-callback-handler-function",
         };
 
-        break;
       case "block_actions":
         console.log("BLOCK ACTIONS CASE MET");
         // Asynchronously handle the blockAction
@@ -78,7 +86,6 @@ export const lambdaHandler = async (event) => {
           statusCode: 200,
           body: "slack handler block action success message. eventBody sent to slack-block-action-handler-function",
         };
-        break;
       default:
         return {
           statusCode: 200,

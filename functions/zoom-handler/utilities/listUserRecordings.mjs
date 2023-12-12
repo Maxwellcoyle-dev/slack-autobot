@@ -1,6 +1,20 @@
 import axios from "axios";
 
-export const listUserRecordings = async (userId, fromDate, toDate, token) => {
+// get todays date in 'yyyy-mm-dd' UTC format
+const today = new Date();
+const initialToDate = today.toISOString().split("T")[0];
+
+// get 7 days ago in 'yyyy-mm-dd' UTC format
+const sevenDaysAgo = new Date();
+sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+const initialFromDate = sevenDaysAgo.toISOString().split("T")[0];
+
+export const listUserRecordings = async (
+  userId,
+  fromDate = initialFromDate,
+  toDate = initialToDate,
+  token
+) => {
   try {
     const usersRequestConfig = {
       headers: {

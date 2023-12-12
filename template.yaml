@@ -37,6 +37,7 @@ Resources:
         - x86_64
       Layers:
         - !Ref UtilityLayer
+        - !Ref TemplateLayer
       Events:
         SlackEventCalllbackHandlerApi:
           Type: Api
@@ -58,6 +59,7 @@ Resources:
         - x86_64
       Layers:
         - !Ref UtilityLayer
+        - !Ref TemplateLayer
       Events:
         SlackBlockActionHandlerApi:
           Type: Api
@@ -75,7 +77,7 @@ Resources:
       CodeUri: functions/transcript-handler/
       Handler: app.lambdaHandler
       Runtime: nodejs18.x
-      Timeout: 200
+      Timeout: 400
       Architectures:
         - x86_64
       Layers:
@@ -95,7 +97,7 @@ Resources:
       CodeUri: functions/zoom-handler/
       Handler: app.lambdaHandler
       Runtime: nodejs18.x
-      Timeout: 200
+      Timeout: 400
       Architectures:
         - x86_64
       Layers:
@@ -119,7 +121,15 @@ Resources:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: utility-layer
-      ContentUri: utility-layer/
+      ContentUri: layers/utility-layer/
+      CompatibleRuntimes:
+        - nodejs18.x
+      RetentionPolicy: Retain
+  TemplateLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: template-layer
+      ContentUri: layers/template-layer/
       CompatibleRuntimes:
         - nodejs18.x
       RetentionPolicy: Retain

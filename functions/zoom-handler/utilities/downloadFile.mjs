@@ -16,6 +16,9 @@ export const downloadFile = async (downloadUrl, token) => {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      console.log("downloadFile - response --- ", response);
+
       return response.data;
     } catch (error) {
       attempts++;

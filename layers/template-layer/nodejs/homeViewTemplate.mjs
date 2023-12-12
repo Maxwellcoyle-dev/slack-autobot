@@ -29,7 +29,11 @@ const initialFromDate = sevenDaysAgo.toISOString().split("T")[0];
 console.log("initialFromDate", initialFromDate);
 
 // HOME VIEW TEMPLATE - Used to create the home view
-export const homeViewTemplate = (meetingsList) => {
+export const homeViewTemplate = (
+  meetingsList,
+  fromDate = initialFromDate,
+  toDate = initialToDate
+) => {
   console.log("meetingsList from the homeViewTemplate", meetingsList);
 
   const blocks = [
@@ -53,29 +57,41 @@ export const homeViewTemplate = (meetingsList) => {
       type: "section",
       text: {
         type: "mrkdwn",
-        text: "*Select a date range* ",
+        text: "*Select a date range*",
       },
+    },
+    {
+      type: "context",
+      elements: [
+        {
+          type: "plain_text",
+          text: "Choose the start and end dates for your search.",
+          emoji: true,
+        },
+      ],
     },
     {
       type: "actions",
       elements: [
         {
           type: "datepicker",
-          initial_date: `${initialFromDate}`,
+          initial_date: `${fromDate}`,
           placeholder: {
             type: "plain_text",
-            text: "Select a date",
+            text: "Select start date",
             emoji: true,
           },
+          action_id: "from_date_action",
         },
         {
           type: "datepicker",
-          initial_date: `${initialToDate}`,
+          initial_date: `${toDate}`,
           placeholder: {
             type: "plain_text",
-            text: "Select a date",
+            text: "Select end date",
             emoji: true,
           },
+          action_id: "to_date_action",
         },
         {
           type: "button",
@@ -85,7 +101,7 @@ export const homeViewTemplate = (meetingsList) => {
             emoji: true,
           },
           value: "search",
-          action_id: "search-meeting-action",
+          action_id: "search_meeting_action",
         },
       ],
     },
@@ -98,11 +114,11 @@ export const homeViewTemplate = (meetingsList) => {
     meetingsList.forEach((meeting) => {
       // Values from the meeting object
       const meetingUuid = meeting.uuid;
-      const meetingId = meeting.id;
       const meetingTopic = meeting.topic;
-      const downloadUrl = meeting.recording_files[0].download_url;
-      const meetingDuration = meeting.duration;
       const startTime = meeting.start_time;
+      const downloadUrl = meeting.recording_files.filter(
+        (file) => file.file_extension === "VTT"
+      )[0].download_url;
 
       // Call formatData to format the date and time of the meeting
       const formattedDate = formatData(startTime);

@@ -3,7 +3,13 @@ import { WebClient } from "@slack/web-api";
 import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
 import { homeViewTemplate } from "/opt/nodejs/homeViewTemplate.mjs";
 
-export const homeViewPublisher = async (userId, recordingsList) => {
+export const homeViewUpdater = async (
+  userId,
+  viewId,
+  recordingsList,
+  fromDate,
+  toDate
+) => {
   console.log("homeViewPublisher RECORDINGS VALUE CHECK", recordingsList);
 
   // Get the Slack Bot Token from AWS Secrets Manager
@@ -13,10 +19,10 @@ export const homeViewPublisher = async (userId, recordingsList) => {
   const slackClient = new WebClient(SLACK_BOT_TOKEN);
 
   try {
-    console.log("publishing home view for user: ", userId);
-    const homeViewPayload = homeViewTemplate(recordingsList);
+    const homeViewPayload = homeViewTemplate(recordingsList, fromDate, toDate);
     console.log("homeViewPayload", homeViewPayload);
-    const result = await slackClient.views.publish({
+    const result = await slackClient.views.update({
+      view_id: viewId,
       user_id: userId,
       view: homeViewPayload,
     });
