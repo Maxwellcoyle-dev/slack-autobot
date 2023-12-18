@@ -17,8 +17,8 @@ lint = true
 capabilities = "CAPABILITY_IAM"
 confirm_changeset = true
 resolve_s3 = true
-stack_name = "salck-autobot"
-s3_prefix = "salck-autobot"
+stack_name = "slack-autobot"
+s3_prefix = "slack-autobot"
 region = "us-east-2"
 image_repositories = []
 
