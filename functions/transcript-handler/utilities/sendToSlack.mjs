@@ -2,13 +2,7 @@ import { WebClient } from "@slack/web-api";
 
 import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
 
-export const sendToSlack = async (
-  slackUserId,
-  message,
-  topic,
-  meetingType,
-  analysisType
-) => {
+export const sendToSlack = async (slackUserId, message, topic) => {
   try {
     // get token from aws secret manager
     const newToken = await getSecret(
@@ -20,7 +14,7 @@ export const sendToSlack = async (
 
     const response = await slackClient.chat.postMessage({
       channel: slackUserId,
-      text: `*${topic}*\nMEETING TYPE: ${meetingType}\nANALYSIS TYPE: ${analysisType}\n\n${message}`,
+      text: `*${topic} -- Analysis*\n\n${message}`,
     });
     console.log("response", response);
     return response;

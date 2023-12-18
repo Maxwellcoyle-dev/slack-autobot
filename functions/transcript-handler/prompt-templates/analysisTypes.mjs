@@ -16,8 +16,8 @@ Example notes
 Successfully used get requests to retrieve worker profile information using both the Workday REST Connector & the Workday Web Services Connector
 Successful test run on base recipe that gets all course completion data 
 
-*Action Items*
-{action items based on the call]
+Action Items
+[action items based on the call]
 Example action items
 Determine request to update users in Workday
 Workday REST Connector using a Custom Action
