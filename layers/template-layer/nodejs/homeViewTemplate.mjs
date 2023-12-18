@@ -112,13 +112,16 @@ export const homeViewTemplate = (
 
   try {
     meetingsList.forEach((meeting) => {
+      console.log("meeting", meeting);
+      console.log(meeting.recording_files);
+      console.log(meeting.recording_files[0]);
       // Values from the meeting object
       const meetingUuid = meeting.uuid;
       const meetingTopic = meeting.topic;
       const startTime = meeting.start_time;
       const downloadUrl = meeting.recording_files.filter(
         (file) => file.file_extension === "VTT"
-      )[0].download_url;
+      )[0]?.download_url;
 
       // Call formatData to format the date and time of the meeting
       const formattedDate = formatData(startTime);

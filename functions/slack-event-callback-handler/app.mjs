@@ -6,11 +6,21 @@ import { homeViewPublisher } from "./views/homeViewPublisher.mjs";
 export const lambdaHandler = async (event) => {
   try {
     console.log("SLACK HANDLER TRIGGERED BY EVENT --- ", event);
+
     const eventPayload = JSON.parse(event.body);
+    const eventType = eventPayload?.type;
+
     console.log("EVENT PAYLOAD --- ", eventPayload);
+    console.log("EVENT TYPE --- ", eventType);
+
+    // Check if the Slack Event is a URL Verification Event
+    // If yes, return the challenge value sent by Slack + exit the function
+    if (eventType === "url_verification") {
+      return urlVerificationHandler(eventPayload);
+    }
 
     // Get the recordings list for the user
-    const slackUserId = eventPayload.event.user;
+    const slackUserId = eventPayload?.event?.user;
 
     const slackUserEmail = await getUserEmail(slackUserId);
     const recordingsList = await listRecordings(slackUserEmail);
@@ -33,4 +43,16 @@ export const lambdaHandler = async (event) => {
 
     throw new Error(error);
   }
+};
+
+// Function to handle the URL Verification Event
+const urlVerificationHandler = (body) => {
+  // Return the challenge value sent by Slack
+  return {
+    statusCode: 200,
+    body: body.challenge,
+    headers: {
+      "Content-Type": "text/plain",
+    },
+  };
 };

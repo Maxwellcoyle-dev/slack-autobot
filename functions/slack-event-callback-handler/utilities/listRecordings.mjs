@@ -37,6 +37,21 @@ export const listRecordings = async (
       params: payload,
     });
     console.log("LIST RECORDINGS - RESPONSE --- ", response);
+
+    const recordings = response.data.recordings.meetings.map((meeting) => {
+      const recordingSchema = {
+        meetingId: meeting.uuid,
+        meetingTopic: meeting.topic,
+        meetingDate: meeting.start_time,
+        meetingDuration: meeting.duration,
+        downloadUrl: meeting.recording_files.filter(
+          (file) => file.file_type === "VTT"
+        )[0].download_url,
+      };
+      return recordingSchema;
+    });
+    console.log("PARSED RECORDINGS LIST --- ", recordings);
+
     return response.data.recordings.meetings;
   } catch (error) {
     console.log("LIST RECORDINGS - ERROR", error);
