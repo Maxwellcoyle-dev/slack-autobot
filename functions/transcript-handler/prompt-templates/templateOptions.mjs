@@ -3,7 +3,7 @@ import {
   connectKickoffCall,
   connectDiscoveryCall,
   learnOnboardingCall,
-  trainicityTeamMeeting,
+  generalMeeting,
 } from "./meetingTypes.mjs";
 
 import {
@@ -20,7 +20,7 @@ export const meetingTypeOptions = {
   connect_kickoff_call: connectKickoffCall,
   connect_discovery_call: connectDiscoveryCall,
   learn_onboarding_call: learnOnboardingCall,
-  trainicity_team_meeting: trainicityTeamMeeting,
+  general_meeting: generalMeeting,
 };
 export const analysisTypeOptions = {
   docebo_call_followup_email: doceboCallFollowUpEmail,
