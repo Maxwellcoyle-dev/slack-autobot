@@ -16,6 +16,7 @@ const analysisTypeOptions = [
     name: "Docebo Call Improvement Advice",
   },
   { id: "summary_analysis", name: "Summary Analysis" },
+  { id: "call_notes", name: "Call Notes" },
 ];
 
 export const modalViewTemplate = (meetingUuid, meetingTopic, downloadUrl) => {

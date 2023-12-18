@@ -27,7 +27,7 @@ The goal of the onboarding projects is to help clients get from 0 to soft launch
 
 The SDM needs to guide the client towards this soft launch using best practice project management and consulting practices.`;
 
-export const trainicityTeamMeeting = `Trainicity is a small business with 5-10 employees. We offer L&D services to mid-sized to enterprise level businesses. The business is made up of 2 parts, Instructional design and LMS Implementations. Our design team works with many different clients to develop learning content for their employees. While our LMS team is a Docebo partner and does most of our work specifically with Docebo. 
+export const generalMeeting = `Trainicity is a small business with 5-10 employees. We offer L&D services to mid-sized to enterprise level businesses. The business is made up of 2 parts, Instructional design and LMS Implementations. Our design team works with many different clients to develop learning content for their employees. While our LMS team is a Docebo partner and does most of our work specifically with Docebo. 
 
-This call could be any type of team call with internal Trainicity team members or Trainicity + Docebo Team members. 
+This call could be any type of team call with internal Trainicity team members or Trainicity + Docebo Team members.
 `;
