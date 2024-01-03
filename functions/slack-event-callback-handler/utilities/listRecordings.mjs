@@ -36,23 +36,9 @@ export const listRecordings = async (
     const response = await axios.get(ZOOM_LIST_RECORDINGS_URL, {
       params: payload,
     });
-    console.log("LIST RECORDINGS - RESPONSE --- ", response);
+    console.log("LIST RECORDINGS - RESPONSE --- ", response.data.recordings);
 
-    const recordings = response.data.recordings.meetings.map((meeting) => {
-      const recordingSchema = {
-        meetingId: meeting.uuid,
-        meetingTopic: meeting.topic,
-        meetingDate: meeting.start_time,
-        meetingDuration: meeting.duration,
-        downloadUrl: meeting.recording_files.filter(
-          (file) => file.file_type === "VTT"
-        )[0].download_url,
-      };
-      return recordingSchema;
-    });
-    console.log("PARSED RECORDINGS LIST --- ", recordings);
-
-    return response.data.recordings.meetings;
+    return response.data.recordings;
   } catch (error) {
     console.log("LIST RECORDINGS - ERROR", error);
     throw new Error(error);

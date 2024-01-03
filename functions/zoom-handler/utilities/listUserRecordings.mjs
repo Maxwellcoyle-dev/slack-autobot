@@ -34,8 +34,34 @@ export const listUserRecordings = async (
       recordingsEndpoint,
       usersRequestConfig
     );
-    console.log(listRecordings.data);
-    return listRecordings.data;
+    console.log("raw recording data list --- ", listRecordings.data);
+    console.log(
+      "example of meetings[i].recording_files --- ",
+      listRecordings.data.meetings[0].recording_files
+    );
+    console.log(
+      "example of meetings[i].recording_files --- ",
+      listRecordings.data.meetings[1].recording_files
+    );
+
+    const recordingsTranscriptList = listRecordings.data.meetings
+      .filter((meeting) => meeting.duration > 1) // Add this line to filter meetings
+      .map((meeting) => {
+        const recordingSchema = {
+          meetingUuid: meeting.uuid,
+          meetingTopic: meeting.topic,
+          meetingDate: meeting.start_time,
+          meetingTimeZone: meeting.timezone,
+          meetingDuration: meeting.duration,
+          downloadUrl: meeting.recording_files.filter(
+            (file) => file.file_extension === "VTT"
+          )[0]?.download_url,
+        };
+        return recordingSchema;
+      });
+
+    console.log("recordingsTranscriptList --- ", recordingsTranscriptList);
+    return recordingsTranscriptList;
   } catch (error) {
     console.log(error);
     throw new Error(

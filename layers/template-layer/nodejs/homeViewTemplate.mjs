@@ -1,5 +1,5 @@
 // FORMAT DATA HELPER FUNCTION - Used to format the date and time of the meeting
-const formatData = (dateStr) => {
+const formatData = (timeZone, dateStr) => {
   const dateObj = new Date(dateStr);
   const dateString = dateObj.toLocaleDateString("en-US", {
     month: "2-digit",
@@ -113,18 +113,16 @@ export const homeViewTemplate = (
   try {
     meetingsList.forEach((meeting) => {
       console.log("meeting", meeting);
-      console.log(meeting.recording_files);
-      console.log(meeting.recording_files[0]);
       // Values from the meeting object
-      const meetingUuid = meeting.uuid;
-      const meetingTopic = meeting.topic;
-      const startTime = meeting.start_time;
-      const downloadUrl = meeting.recording_files.filter(
-        (file) => file.file_extension === "VTT"
-      )[0]?.download_url;
+      const meetingUuid = meeting.meetingUuid;
+      const meetingTopic = meeting.meetingTopic;
+      const meetingDate = meeting.meetingDate;
+      const meetingTimeZome = meeting.meetingTimeZome;
+      const meetingDuration = meeting.meetingDuration;
+      const downloadUrl = meeting.dowwnloadUrl;
 
       // Call formatData to format the date and time of the meeting
-      const formattedDate = formatData(startTime);
+      const formattedDate = formatData(meetingTimeZome, meetingDate);
 
       const blockArray = [
         {

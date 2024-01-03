@@ -80,8 +80,10 @@ export const blockActionHandler = async (payload) => {
         console.log("recordingsList --- ", recordingsList.data);
 
         // Get the first 30 recordings
-        const updatedRecordingsList =
-          recordingsList.data.recordings.meetings.splice(0, 20);
+        const updatedRecordingsList = recordingsList.data.recordings.splice(
+          0,
+          20
+        );
         console.log("updatedRecordingsList --- ", updatedRecordingsList);
 
         const updateHomeViewResponse = await homeViewUpdater(
