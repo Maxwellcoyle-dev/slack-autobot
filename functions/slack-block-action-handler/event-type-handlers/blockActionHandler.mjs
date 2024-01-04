@@ -26,6 +26,7 @@ export const blockActionHandler = async (payload) => {
         console.log("ACTION HANDLER - ACTION: open_modal");
         // get the actionValuePayload
         const actionValuePayload = JSON.parse(payload.actions[0].value);
+        console.log("actionValuePayload --- ", actionValuePayload);
         // SLACK MODAL PAYLOAD
         const slackModalPayload = slackModalPayloadBuilder(
           payload,
@@ -115,6 +116,11 @@ export const blockActionHandler = async (payload) => {
 const slackModalPayloadBuilder = (eventPayload, actionValuePayload) => {
   // Get the build a actionUuid for the action_id in the modal
   const actionUuid = eventPayload.actions[0].action_id.split("-")[1];
+
+  console.log(
+    "actionValuePayload.downloadUrl --- ",
+    actionValuePayload.downloadUrl
+  );
 
   const slackModalPayload = {
     trigger_id: eventPayload.trigger_id,

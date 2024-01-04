@@ -5,26 +5,41 @@ import { blockActionHandler } from "./event-type-handlers/blockActionHandler.mjs
 
 export const lambdaHandler = async (event) => {
   try {
-    console.log("SLACK BLOCK ACTION HANDLER TRIGGERED BY EVENT --- ", event);
+    console.log("EVENT --- ", event);
     const eventPayload = JSON.parse(querystring.parse(event.body).payload);
     console.log("EVENT PAYLOAD --- ", eventPayload);
 
-    switch (eventPayload.type) {
+    const eventPayloadType = eventPayload.type;
+    console.log("EVENT TYPE --- ", eventPayloadType);
+
+    switch (eventPayloadType) {
+      // Possible Payload Types:
+      // 1. block_actions
+      // 2. view_submission
+
       case "block_actions":
         console.log("EVENT TYPE --- ", eventPayload.type);
 
-        // check of the action type is datepicker
+        // check if the action type is datepicker
         // If yes, then return 200 success
         const actionType = eventPayload.actions[0].type;
-        if (actionType === "datepicker") {
-          console.log("return success for action type --- ", actionType);
-          return {
-            statusCode: 200,
-          };
-        }
+        // Possible Action Types:
+        // 1. datepicker - do nothing
+        // 2. open_modal - blockHandlerResponse - open modal
+        switch (actionType) {
+          case "datepicker":
+            console.log("return success for action type --- ", actionType);
+            return {
+              statusCode: 200,
+            };
+          case "button":
+            const blockHandlerResponse = await blockActionHandler(eventPayload);
+            return blockHandlerResponse;
 
-        const blockHandlerResponse = await blockActionHandler(eventPayload);
-        return blockHandlerResponse;
+          default:
+            console.log("Default Case Met. EVENT TYPE ---  ", actionType);
+            break;
+        }
 
       case "view_submission":
         console.log("EVENT TYPE --- ", eventPayload.type);
@@ -33,7 +48,7 @@ export const lambdaHandler = async (event) => {
         );
         return viewSubmissionResponse;
       default:
-        console.log("EVENT TYPE --- Default Case Met ", eventPayload.type);
+        console.log("Default Case Met. EVENT TYPE ---  ", eventPayload.type);
         return {
           statusCode: 200,
         };

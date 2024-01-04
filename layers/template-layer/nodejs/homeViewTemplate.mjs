@@ -41,7 +41,7 @@ export const homeViewTemplate = (
       type: "header",
       text: {
         type: "plain_text",
-        text: "Slack Autobot",
+        text: "*Select a date range*",
         emoji: true,
       },
     },
@@ -49,26 +49,9 @@ export const homeViewTemplate = (
       type: "section",
       text: {
         type: "plain_text",
-        text: "Combine your Zoom call recordings with the power of AI.",
+        text: "*Choose the start and end dates for your search.*",
         emoji: true,
       },
-    },
-    {
-      type: "section",
-      text: {
-        type: "mrkdwn",
-        text: "*Select a date range*",
-      },
-    },
-    {
-      type: "context",
-      elements: [
-        {
-          type: "plain_text",
-          text: "Choose the start and end dates for your search.",
-          emoji: true,
-        },
-      ],
     },
     {
       type: "actions",
@@ -119,7 +102,7 @@ export const homeViewTemplate = (
       const meetingDate = meeting.meetingDate;
       const meetingTimeZome = meeting.meetingTimeZome;
       const meetingDuration = meeting.meetingDuration;
-      const downloadUrl = meeting.dowwnloadUrl;
+      const downloadUrl = meeting.downloadUrl;
 
       // Call formatData to format the date and time of the meeting
       const formattedDate = formatData(meetingTimeZome, meetingDate);
