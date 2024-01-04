@@ -17,9 +17,12 @@ const analysisTypeOptions = [
   },
   { id: "summary_analysis", name: "Summary Analysis" },
   { id: "call_notes", name: "Call Notes" },
+  { id: "hive_health_report", name: "Hive Health Report" },
 ];
 
 export const modalViewTemplate = (meetingUuid, meetingTopic, downloadUrl) => {
+  console.log("modal view params --- ", meetingUuid, meetingTopic, downloadUrl);
+
   return {
     type: "modal",
     callback_id: `analysis_modal-${meetingUuid}`,

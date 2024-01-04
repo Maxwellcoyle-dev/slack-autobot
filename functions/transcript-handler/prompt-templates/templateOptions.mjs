@@ -12,6 +12,7 @@ import {
   doceboCallImprovementAdvice,
   summaryAnalysis,
   callNotes,
+  hiveHealthReport,
 } from "./analysisTypes.mjs";
 
 // MEETING TYPE OPTIONS - Used to create the meeting type options
@@ -28,4 +29,5 @@ export const analysisTypeOptions = {
   docebo_call_improvement_advice: doceboCallImprovementAdvice,
   summary_analysis: summaryAnalysis,
   call_notes: callNotes,
+  hive_health_report: hiveHealthReport,
 };

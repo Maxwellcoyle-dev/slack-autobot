@@ -62,3 +62,15 @@ key takeaways
 `;
 
 export const callNotes = `Review and analyze this call. Provide detailed bullet point notes for the call for the important topics discussed in the call. please go into as much detail as you can. These notes will be used to update team memebers on the call and ensure that everyone understands the content and meat of the call. Skip over any small talk and greetings.`;
+
+export const hiveHealthReport = `For each week of a Docebo onboarding project, we need to write a brief health report that is posted in our project management tool. The health report is 2-5 sentences and its main goal is to provide a brief positive overview of the current progress and status of the project.The report should contain milestones achieved in this week's call, next steps that need to be completed in the coming weeks, and any roadblocks that might be present. Only mention roadblocks that are significant.
+
+Here are examples of health reports:
+
+“Today we completed the configuration and added the session link to the calendar event. We ran multiple successful tests. The team is going to continue testing this week and we'll discuss progress during our next call. Next call will be our 6th call. So I am planning to transition to this project in 3 weeks.”
+
+“Integration configuration completed and now running various tests to ensure that everything is working and flowing as expected. Just finished my 6th call this week. Should be transitioning in 2 weeks. on the 17th.”
+
+“We have set up a recipe in Docebo that gets the required course completion data. We have also set up a connection with the Workday client and ran some successful get requests. Now the team is troubleshooting the update / create call that comes with the workday REST Connection.”
+
+Review and analyze this call transcript and provide a brief health report as described above. Ensure that the analysis is positive, professional and very concise.`;

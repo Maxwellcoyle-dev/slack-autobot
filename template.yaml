@@ -117,11 +117,3 @@ Resources:
       CompatibleRuntimes:
         - nodejs18.x
       RetentionPolicy: Retain
-  GoogleLayer:
-    Type: AWS::Serverless::LayerVersion
-    Properties:
-      LayerName: google-layer
-      ContentUri: layers/google-layer/
-      CompatibleRuntimes:
-        - nodejs18.x
-      RetentionPolicy: Retain
