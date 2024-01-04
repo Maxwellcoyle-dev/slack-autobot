@@ -36,8 +36,9 @@ export const listRecordings = async (
     const response = await axios.get(ZOOM_LIST_RECORDINGS_URL, {
       params: payload,
     });
-    console.log("LIST RECORDINGS - RESPONSE --- ", response);
-    return response.data.recordings.meetings;
+    console.log("LIST RECORDINGS - RESPONSE --- ", response.data.recordings);
+
+    return response.data.recordings;
   } catch (error) {
     console.log("LIST RECORDINGS - ERROR", error);
     throw new Error(error);

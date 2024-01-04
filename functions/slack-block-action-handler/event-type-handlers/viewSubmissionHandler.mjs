@@ -54,14 +54,17 @@ const transcriptHandlerPayloadBuilder = (eventPayload) => {
   const metaData = eventPayload.view.private_metadata;
 
   const transcriptPayload = {
+    slackUserId: eventPayload.user.id,
     downloadUrl: JSON.parse(metaData).downloadUrl,
     meetingTopic: JSON.parse(metaData).meetingTopic,
     zoomEventType: "download-recording-transcript",
     meetingType: JSON.parse(
-      eventPayload.view.blocks[0].element.options[0].value
+      eventPayload.view.state.values["meeting_type_block"].meeting_type_action
+        .selected_option.value
     ).meetingType,
     analysisType: JSON.parse(
-      eventPayload.view.blocks[0].element.options[0].value
+      eventPayload.view.state.values["analysis_type_block"].analysis_type_action
+        .selected_option.value
     ).analysisType,
   };
   console.log("transcriptPayload --- ", transcriptPayload);

@@ -1,21 +1,22 @@
 // MEETING TYPE OPTIONS - Used to create the meeting type options
 const meetingTypeOptions = [
-  "connect_onboarding_call",
-  "connect_kickoff_call",
-  "connect_discovery_call",
-  "learn_onboarding_call",
-  "learn_kickoff_call",
-  "docebo_sho",
-  "trainicity_team_meeting",
+  { id: "connect_onboarding_call", name: "Connect Onboarding Call" },
+  { id: "connect_kickoff_call", name: "Connect Kickoff Call" },
+  { id: "connect_discovery_call", name: "Connect Discovery Call" },
+  { id: "learn_onboarding_call", name: "Learn Onboarding Call" },
+  { id: "general_call", name: "General Call" },
 ];
 
 // ANALYSIS TYPE OPTIONS - Used to create the analysis type options
 const analysisTypeOptions = [
-  "docebo_call_followup_email",
-  "docebo_call_breakdown",
-  "docebo_call_improvement_advice",
-  "detailed_meeting_notes",
-  "summary_analysis",
+  { id: "docebo_call_followup_email", name: "Docebo Call Follow Up Email" },
+  { id: "docebo_action_items", name: "Docebo Action Items + Questions" },
+  {
+    id: "docebo_call_improvement_advice",
+    name: "Docebo Call Improvement Advice",
+  },
+  { id: "summary_analysis", name: "Summary Analysis" },
+  { id: "call_notes", name: "Call Notes" },
 ];
 
 export const modalViewTemplate = (meetingUuid, meetingTopic, downloadUrl) => {
@@ -51,12 +52,12 @@ export const modalViewTemplate = (meetingUuid, meetingTopic, downloadUrl) => {
             return {
               text: {
                 type: "plain_text",
-                text: `${meetingType}`,
+                text: `${meetingType.name}`,
                 emoji: true,
               },
               value: JSON.stringify({
                 meetingUuid,
-                meetingType,
+                meetingType: meetingType.id,
               }),
             };
           }),
@@ -82,12 +83,12 @@ export const modalViewTemplate = (meetingUuid, meetingTopic, downloadUrl) => {
             return {
               text: {
                 type: "plain_text",
-                text: `${analysisType}`,
+                text: `${analysisType.name}`,
                 emoji: true,
               },
               value: JSON.stringify({
                 meetingUuid,
-                analysisType,
+                analysisType: analysisType.id,
               }),
             };
           }),
@@ -107,23 +108,3 @@ export const modalViewTemplate = (meetingUuid, meetingTopic, downloadUrl) => {
     }),
   };
 };
-
-// try {
-//     // Make sure we have a meetingType and analysisType
-//     if (
-//       payload.view.state.values[blockId][meetingTypeActionId].selected_option
-//         .value === null
-//     ) {
-//       console.log("meetingType or analysisType is null");
-//       throw new Error("meetingType=null");
-//     } else if (
-//       payload.view.state.values[blockId][analysisTypeActionId].selected_option
-//         .value === null
-//     ) {
-//       console.log("meetingType or analysisType is null");
-//       throw new Error("analysisType=null");
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     throw new Error(error);
-//   }

@@ -12,8 +12,19 @@ export const lambdaHandler = async (event) => {
     switch (eventPayload.type) {
       case "block_actions":
         console.log("EVENT TYPE --- ", eventPayload.type);
-        const blockhandlerResponse = await blockActionHandler(eventPayload);
-        return blockhandlerResponse;
+
+        // check of the action type is datepicker
+        // If yes, then return 200 success
+        const actionType = eventPayload.actions[0].type;
+        if (actionType === "datepicker") {
+          console.log("return success for action type --- ", actionType);
+          return {
+            statusCode: 200,
+          };
+        }
+
+        const blockHandlerResponse = await blockActionHandler(eventPayload);
+        return blockHandlerResponse;
 
       case "view_submission":
         console.log("EVENT TYPE --- ", eventPayload.type);

@@ -3,29 +3,6 @@ Transform: AWS::Serverless-2016-10-31
 Description: >
   slack-smartbot
 Resources:
-  SlackHandlerFunction:
-    Type: AWS::Serverless::Function
-    Properties:
-      CodeUri: functions/slack-handler/
-      Handler: app.lambdaHandler
-      Runtime: nodejs18.x
-      Timeout: 200
-      Architectures:
-        - x86_64
-      Layers:
-        - !Ref UtilityLayer
-      Events:
-        SlackHandlerApi:
-          Type: Api
-          Properties:
-            Path: /slack-handler
-            Method: post
-      Environment:
-        Variables:
-          ZOOM_LIST_RECORDINGS_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/list-recordings
-          TRANSCRIPT_HANDLER_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/transcript-handler
-          SLACK_EVENT_CALLBACK_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/slack-event-callback
-          SLACK_BLOCK_ACTION_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/slack-block-action
   SlackEventCallbackHandlerFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -37,6 +14,7 @@ Resources:
         - x86_64
       Layers:
         - !Ref UtilityLayer
+        - !Ref TemplateLayer
       Events:
         SlackEventCalllbackHandlerApi:
           Type: Api
@@ -45,8 +23,8 @@ Resources:
             Method: post
       Environment:
         Variables:
-          ZOOM_LIST_RECORDINGS_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/list-recordings
-          TRANSCRIPT_HANDLER_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/transcript-handler
+          ZOOM_LIST_RECORDINGS_ENDPOINT: https://zm80jkf553.execute-api.us-east-2.amazonaws.com/Prod/list-recordings
+          TRANSCRIPT_HANDLER_ENDPOINT: https://zm80jkf553.execute-api.us-east-2.amazonaws.com/Prod/transcript-handler
   SlackBlockActionHandlerFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -58,6 +36,7 @@ Resources:
         - x86_64
       Layers:
         - !Ref UtilityLayer
+        - !Ref TemplateLayer
       Events:
         SlackBlockActionHandlerApi:
           Type: Api
@@ -66,16 +45,15 @@ Resources:
             Method: post
       Environment:
         Variables:
-          ZOOM_LIST_RECORDINGS_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/list-recordings
-          TRANSCRIPT_HANDLER_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/transcript-handler
-
+          ZOOM_LIST_RECORDINGS_ENDPOINT: https://zm80jkf553.execute-api.us-east-2.amazonaws.com/Prod/list-recordings
+          TRANSCRIPT_HANDLER_ENDPOINT: https://zm80jkf553.execute-api.us-east-2.amazonaws.com/Prod/transcript-handler
   TranscriptHandlerFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: functions/transcript-handler/
       Handler: app.lambdaHandler
       Runtime: nodejs18.x
-      Timeout: 200
+      Timeout: 400
       Architectures:
         - x86_64
       Layers:
@@ -88,14 +66,14 @@ Resources:
             Method: post
       Environment:
         Variables:
-          ZOOM_DOWNLOAD_FILE_ENDPOINT: https://5qlfmqhtg8.execute-api.us-east-2.amazonaws.com/Prod/download-url
+          ZOOM_DOWNLOAD_FILE_ENDPOINT: https://zm80jkf553.execute-api.us-east-2.amazonaws.com/Prod/download-url
   ZoomHandlerFunction:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: functions/zoom-handler/
       Handler: app.lambdaHandler
       Runtime: nodejs18.x
-      Timeout: 200
+      Timeout: 400
       Architectures:
         - x86_64
       Layers:
@@ -119,7 +97,31 @@ Resources:
     Type: AWS::Serverless::LayerVersion
     Properties:
       LayerName: utility-layer
-      ContentUri: utility-layer/
+      ContentUri: layers/utility-layer/
+      CompatibleRuntimes:
+        - nodejs18.x
+      RetentionPolicy: Retain
+  TemplateLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: template-layer
+      ContentUri: layers/template-layer/
+      CompatibleRuntimes:
+        - nodejs18.x
+      RetentionPolicy: Retain
+  AWSLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: aws-layer
+      ContentUri: layers/aws-layer/
+      CompatibleRuntimes:
+        - nodejs18.x
+      RetentionPolicy: Retain
+  GoogleLayer:
+    Type: AWS::Serverless::LayerVersion
+    Properties:
+      LayerName: google-layer
+      ContentUri: layers/google-layer/
       CompatibleRuntimes:
         - nodejs18.x
       RetentionPolicy: Retain

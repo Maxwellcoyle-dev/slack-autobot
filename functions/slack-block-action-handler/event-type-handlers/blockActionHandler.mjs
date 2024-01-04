@@ -1,7 +1,13 @@
 import { WebClient } from "@slack/web-api";
+import axios from "axios";
+
+import { homeViewUpdater } from "../views/homeViewUpdater.mjs";
 
 import { modalViewTemplate } from "../modalViewTemplate.mjs";
 import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
+import { getUserEmail } from "/opt/nodejs/utilities/getSlackUser.mjs";
+
+const ZOOM_LIST_RECORDINGS_ENDPOINT = process.env.ZOOM_LIST_RECORDINGS_ENDPOINT;
 
 export const blockActionHandler = async (payload) => {
   console.log("ACTION HANDLER - BODY --- ", payload);
@@ -11,15 +17,6 @@ export const blockActionHandler = async (payload) => {
   const SLACK_BOT_TOKEN = newToken.SLACK_BOT_TOKEN;
   const slackClient = new WebClient(SLACK_BOT_TOKEN);
 
-  // get the actionValuePayload
-  const actionValuePayload = JSON.parse(payload.actions[0].value);
-
-  // SLACK MODAL PAYLOAD
-  const slackModalPayload = slackModalPayloadBuilder(
-    payload,
-    actionValuePayload
-  );
-
   const actionType = payload.actions[0].action_id.split("-")[0];
   console.log("actionType --- ", actionType);
 
@@ -27,6 +24,13 @@ export const blockActionHandler = async (payload) => {
     switch (actionType) {
       case "open_modal":
         console.log("ACTION HANDLER - ACTION: open_modal");
+        // get the actionValuePayload
+        const actionValuePayload = JSON.parse(payload.actions[0].value);
+        // SLACK MODAL PAYLOAD
+        const slackModalPayload = slackModalPayloadBuilder(
+          payload,
+          actionValuePayload
+        );
         // Open the modal
         await slackClient.views
           .open(slackModalPayload)
@@ -45,9 +49,58 @@ export const blockActionHandler = async (payload) => {
               "Slack block action handler executed successfully for Action OPEN_MODAL!",
           }),
         };
-      case "search_meetings":
+      case "search_meeting_action":
         console.log("ACTION HANDLER - ACTION: search-meeting-action");
-        break;
+
+        console.log("payload.state.values --- ", payload.view.state.values);
+        // Retrieve the first key from the values object, assuming there's only one such key
+        const outerKey = Object.keys(payload.view.state.values)[0];
+
+        // Use the outerKey to access the date values
+        const fromDate =
+          payload.view.state.values[outerKey].from_date_action.selected_date;
+        const toDate =
+          payload.view.state.values[outerKey].to_date_action.selected_date;
+        console.log("fromDate --- ", fromDate);
+        console.log("toDate --- ", toDate);
+
+        const viewId = payload.view.id;
+
+        // use slack id to get user email for zoom api
+        const slackUserId = payload.user.id;
+        const slackUserEmail = await getUserEmail(slackUserId);
+        const recordingsList = await axios.get(ZOOM_LIST_RECORDINGS_ENDPOINT, {
+          params: {
+            user_id: slackUserEmail,
+            from: fromDate,
+            to: toDate,
+            eventType: "list-user-recordings",
+          },
+        });
+        console.log("recordingsList --- ", recordingsList.data);
+
+        // Get the first 30 recordings
+        const updatedRecordingsList = recordingsList.data.recordings.splice(
+          0,
+          20
+        );
+        console.log("updatedRecordingsList --- ", updatedRecordingsList);
+
+        const updateHomeViewResponse = await homeViewUpdater(
+          slackUserId,
+          viewId,
+          updatedRecordingsList,
+          fromDate,
+          toDate
+        );
+        console.log("updateHomeViewResponse --- ", updateHomeViewResponse);
+        return {
+          statusCode: 200,
+          body: JSON.stringify({
+            message:
+              "Slack block action handler executed successfully for Action SEARCH_MEETING_ACTION!",
+          }),
+        };
 
       default:
         console.log("default");
