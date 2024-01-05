@@ -10,7 +10,7 @@ import {
   analysisTypeOptions,
 } from "../prompt-templates/templateOptions.mjs";
 
-const openaiSecretname = "dev/meeting-analyzer/openai-key";
+const ENVIRONMENT = process.env.ENVIRONMENT;
 
 export const openAiAnalyzerChain = async (
   transcript,
@@ -19,8 +19,10 @@ export const openAiAnalyzerChain = async (
   meetingTopic
 ) => {
   try {
-    const openaiApiKeyResponse = await getSecret(openaiSecretname);
-    const openAIApiKey = openaiApiKeyResponse.OPENAI_API_KEY;
+    const openaiApiKeyResponse = await getSecret(
+      `slack-call-analyzer/openai-api-secret-key/${ENVIRONMENT}`
+    );
+    const openAIApiKey = openaiApiKeyResponse.OPENAI_API_SECRET_KEY;
 
     const llmOpenAI = new OpenAI({
       openAIApiKey: openAIApiKey,

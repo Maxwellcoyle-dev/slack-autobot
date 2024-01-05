@@ -19,7 +19,7 @@ export const getSecret = async (secretId) => {
     const key = JSON.parse(response.SecretString);
     return key;
   } catch (err) {
-    console.log(err);
+    console.log("Error getting secret value for secretId --- ", err);
     return err;
   }
 };

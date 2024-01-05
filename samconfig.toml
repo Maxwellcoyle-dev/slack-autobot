@@ -21,10 +21,7 @@ stack_name = "slack-call-analyzer-prod"
 s3_prefix = "slack-call-analyzer/prod"
 region = "us-east-2"
 image_repositories = []
-environment_type = "prod"
-download_url = "https://fpaztvc0r3.execute-api.us-east-2.amazonaws.com/Prod/download-url"
-list_recordings = "https://fpaztvc0r3.execute-api.us-east-2.amazonaws.com/Prod/list-recordings"
-transcript_handler = "https://fpaztvc0r3.execute-api.us-east-2.amazonaws.com/Prod/transcript-handler"
+parameter_overrides = "EnvironmentType=prod"  # Add this line
 
 [prod.package.parameters]
 resolve_s3 = true
@@ -57,10 +54,7 @@ stack_name = "slack-call-analyzer-dev"
 s3_prefix = "slack-call-analyzer/dev"
 region = "us-east-2"
 image_repositories = []
-environment_type = "dev"
-download_url = "https://wlxxj9i0dj.execute-api.us-east-2.amazonaws.com/Prod/download-url"
-list_recordings = "https://wlxxj9i0dj.execute-api.us-east-2.amazonaws.com/Prod/list-recordings"
-transcript_handler = "https://wlxxj9i0dj.execute-api.us-east-2.amazonaws.com/Prod/transcript-handler"
+parameter_overrides = "EnvironmentType=dev"  # Add this line
 
 [dev.package.parameters]
 resolve_s3 = true

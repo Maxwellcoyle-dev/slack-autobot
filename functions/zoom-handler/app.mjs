@@ -4,6 +4,10 @@ import { getOathToken } from "./utilities/getOathToken.mjs";
 
 import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
 
+// ZOOM ACCOUNT ID AND CLIENT ID - YAML DEFINED ENV VARIABLES
+const clientId = process.env.ZOOM_CLIENT_ID;
+const accountId = process.env.ZOOM_ACCOUNT_ID;
+
 // INCOMING PAYLOAD
 // {
 //   "user_id": "",
@@ -11,20 +15,13 @@ import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
 //   "end_date": ""
 // }
 
-// ZOOM ACCOUNT ID AND CLIENT ID - YAML DEFINED ENV VARIABLES
-const clientId = process.env.ZOOM_CLIENT_ID;
-const accountId = process.env.ZOOM_ACCOUNT_ID;
-
-// ZOOM CLIENT SECRET NAME - AWS SECRETS MANAGER SECRET NAME
-const zoomClientSecretName = "dev/slack-automation-app/zoom-client";
-
 export const lambdaHandler = async (event) => {
   let clientSecret; // Variable to store the Zoom Client Secret
   // Block to get the Zoom Client Secret -- Used to get Zoom OAuth Token
   try {
     // Get the Zoom Client Secret from AWS Secrets Manager
     // Send the Zoom Client Secret Name to the getSecret function
-    const secret = await getSecret(zoomClientSecretName);
+    const secret = await getSecret(`slack-call-analyzer/zoom-client-secret`);
     // get secret value from secret object
     clientSecret = secret.ZOOM_CLIENT_SECRET;
   } catch (error) {

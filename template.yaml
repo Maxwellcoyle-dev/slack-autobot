@@ -2,6 +2,25 @@ AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
   slack-call-analyzer
+
+Parameters:
+  EnvironmentType:
+    Type: String
+    AllowedValues:
+      - dev
+      - prod
+
+Mappings:
+  EnvironmentConfig:
+    dev:
+      ListRecordingsEndpoint: "https://wlxxj9i0dj.execute-api.us-east-2.amazonaws.com/Prod/list-recordings"
+      TranscriptHandlerEndpoint: "https://wlxxj9i0dj.execute-api.us-east-2.amazonaws.com/Prod/transcript-handler"
+      DownloadUrlEndpoint: "https://wlxxj9i0dj.execute-api.us-east-2.amazonaws.com/Prod/download-url"
+    prod:
+      ListRecordingsEndpoint: "https://fpaztvc0r3.execute-api.us-east-2.amazonaws.com/Prod/list-recordings"
+      TranscriptHandlerEndpoint: "https://fpaztvc0r3.execute-api.us-east-2.amazonaws.com/Prod/transcript-handler"
+      DownloadUrlEndpoint: "https://fpaztvc0r3.execute-api.us-east-2.amazonaws.com/Prod/download-url"
+
 Resources:
   SlackEventCallbackHandlerFunction:
     Type: AWS::Serverless::Function
@@ -23,9 +42,20 @@ Resources:
             Method: post
       Environment:
         Variables:
-          ZOOM_LIST_RECORDINGS_ENDPOINT: !Ref list_recordings
-          TRANSCRIPT_HANDLER_ENDPOINT: !Ref transcript_handler
-          ENVIRONMENT: !Ref environment_type
+          LIST_RECORDINGS_ENDPOINT:
+            !FindInMap [
+              EnvironmentConfig,
+              !Ref EnvironmentType,
+              ListRecordingsEndpoint,
+            ]
+          TRANSCRIPT_HANDLER_ENDPOINT:
+            !FindInMap [
+              EnvironmentConfig,
+              !Ref EnvironmentType,
+              TranscriptHandlerEndpoint,
+            ]
+          ENVIRONMENT: !Ref EnvironmentType
+
   SlackBlockActionHandlerFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -46,9 +76,20 @@ Resources:
             Method: post
       Environment:
         Variables:
-          ZOOM_LIST_RECORDINGS_ENDPOINT: !Ref list_recordings
-          TRANSCRIPT_HANDLER_ENDPOINT: !Ref transcript_handler
-          ENVIRONMENT: !Ref environment_type
+          LIST_RECORDINGS_ENDPOINT:
+            !FindInMap [
+              EnvironmentConfig,
+              !Ref EnvironmentType,
+              ListRecordingsEndpoint,
+            ]
+          TRANSCRIPT_HANDLER_ENDPOINT:
+            !FindInMap [
+              EnvironmentConfig,
+              !Ref EnvironmentType,
+              TranscriptHandlerEndpoint,
+            ]
+          ENVIRONMENT: !Ref EnvironmentType
+
   TranscriptHandlerFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -68,8 +109,14 @@ Resources:
             Method: post
       Environment:
         Variables:
-          ZOOM_DOWNLOAD_FILE_ENDPOINT: !Ref download_url
-          ENVIRONMENT: !Ref environment_type
+          DOWNLOAD_URL_ENDPOINT:
+            !FindInMap [
+              EnvironmentConfig,
+              !Ref EnvironmentType,
+              DownloadUrlEndpoint,
+            ]
+          ENVIRONMENT: !Ref EnvironmentType
+
   ZoomHandlerFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -96,7 +143,8 @@ Resources:
         Variables:
           ZOOM_ACCOUNT_ID: E0sx9tC3SoCVASxjEDoSTg
           ZOOM_CLIENT_ID: DceCafsiTZKX_zl8uGiBkQ
-          ENVIRONMENT: !Ref environment_type
+          ENVIRONMENT: !Ref EnvironmentType
+
   UtilityLayer:
     Type: AWS::Serverless::LayerVersion
     Properties:

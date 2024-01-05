@@ -18,8 +18,6 @@ export const lambdaHandler = async (event) => {
       // 2. view_submission
 
       case "block_actions":
-        console.log("EVENT TYPE --- ", eventPayload.type);
-
         // check if the action type is datepicker
         // If yes, then return 200 success
         const actionType = eventPayload.actions[0].type;
@@ -42,7 +40,6 @@ export const lambdaHandler = async (event) => {
         }
 
       case "view_submission":
-        console.log("EVENT TYPE --- ", eventPayload.type);
         const viewSubmissionResponse = await viewSubmissionHandler(
           eventPayload
         );

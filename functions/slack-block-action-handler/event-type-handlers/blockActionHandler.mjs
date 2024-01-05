@@ -7,15 +7,18 @@ import { modalViewTemplate } from "../modalViewTemplate.mjs";
 import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
 import { getUserEmail } from "/opt/nodejs/utilities/getSlackUser.mjs";
 
-const ZOOM_LIST_RECORDINGS_ENDPOINT = process.env.ZOOM_LIST_RECORDINGS_ENDPOINT;
+const LIST_RECORDINGS_ENDPOINT = process.env.LIST_RECORDINGS_ENDPOINT;
+const ENVIRONMENT = process.env.ENVIRONMENT;
 
 export const blockActionHandler = async (payload) => {
   console.log("ACTION HANDLER - BODY --- ", payload);
 
   // Get the Slack Bot Token from AWS Secrets Manager
-  const newToken = await getSecret("dev/slack-automation-app/slack-bot-token");
-  const SLACK_BOT_TOKEN = newToken.SLACK_BOT_TOKEN;
-  const slackClient = new WebClient(SLACK_BOT_TOKEN);
+  const newToken = await getSecret(
+    `slack-call-analyzer/bot-user-oauth-token/${ENVIRONMENT}`
+  );
+  const BOT_USER_OAUTH_TOKEN = newToken.BOT_USER_OAUTH_TOKEN;
+  const slackClient = new WebClient(BOT_USER_OAUTH_TOKEN);
 
   const actionType = payload.actions[0].action_id.split("-")[0];
   console.log("actionType --- ", actionType);
@@ -70,7 +73,7 @@ export const blockActionHandler = async (payload) => {
         // use slack id to get user email for zoom api
         const slackUserId = payload.user.id;
         const slackUserEmail = await getUserEmail(slackUserId);
-        const recordingsList = await axios.get(ZOOM_LIST_RECORDINGS_ENDPOINT, {
+        const recordingsList = await axios.get(LIST_RECORDINGS_ENDPOINT, {
           params: {
             user_id: slackUserEmail,
             from: fromDate,
