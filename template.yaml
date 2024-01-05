@@ -1,7 +1,7 @@
 AWSTemplateFormatVersion: "2010-09-09"
 Transform: AWS::Serverless-2016-10-31
 Description: >
-  slack-smartbot
+  slack-call-analyzer
 Resources:
   SlackEventCallbackHandlerFunction:
     Type: AWS::Serverless::Function
@@ -23,8 +23,9 @@ Resources:
             Method: post
       Environment:
         Variables:
-          ZOOM_LIST_RECORDINGS_ENDPOINT: https://zm80jkf553.execute-api.us-east-2.amazonaws.com/Prod/list-recordings
-          TRANSCRIPT_HANDLER_ENDPOINT: https://zm80jkf553.execute-api.us-east-2.amazonaws.com/Prod/transcript-handler
+          ZOOM_LIST_RECORDINGS_ENDPOINT: !Ref list_recordings
+          TRANSCRIPT_HANDLER_ENDPOINT: !Ref transcript_handler
+          ENVIRONMENT: !Ref environment_type
   SlackBlockActionHandlerFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -45,8 +46,9 @@ Resources:
             Method: post
       Environment:
         Variables:
-          ZOOM_LIST_RECORDINGS_ENDPOINT: https://zm80jkf553.execute-api.us-east-2.amazonaws.com/Prod/list-recordings
-          TRANSCRIPT_HANDLER_ENDPOINT: https://zm80jkf553.execute-api.us-east-2.amazonaws.com/Prod/transcript-handler
+          ZOOM_LIST_RECORDINGS_ENDPOINT: !Ref list_recordings
+          TRANSCRIPT_HANDLER_ENDPOINT: !Ref transcript_handler
+          ENVIRONMENT: !Ref environment_type
   TranscriptHandlerFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -66,7 +68,8 @@ Resources:
             Method: post
       Environment:
         Variables:
-          ZOOM_DOWNLOAD_FILE_ENDPOINT: https://zm80jkf553.execute-api.us-east-2.amazonaws.com/Prod/download-url
+          ZOOM_DOWNLOAD_FILE_ENDPOINT: !Ref download_url
+          ENVIRONMENT: !Ref environment_type
   ZoomHandlerFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -93,6 +96,7 @@ Resources:
         Variables:
           ZOOM_ACCOUNT_ID: E0sx9tC3SoCVASxjEDoSTg
           ZOOM_CLIENT_ID: DceCafsiTZKX_zl8uGiBkQ
+          ENVIRONMENT: !Ref environment_type
   UtilityLayer:
     Type: AWS::Serverless::LayerVersion
     Properties:
