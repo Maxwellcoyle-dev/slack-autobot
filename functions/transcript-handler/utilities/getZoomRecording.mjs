@@ -1,13 +1,13 @@
 import axios from "axios";
 
-const ZOOM_DOWNLOAD_FILE_ENDPOINT = process.env.ZOOM_DOWNLOAD_FILE_ENDPOINT;
+const DOWNLOAD_URL_ENDPOINT = process.env.DOWNLOAD_URL_ENDPOINT;
 
 export const getZoomRecording = async (downloadUrl) => {
-  console.log("ZOOM_DOWNLOAD_RECORDING_URL --- ", ZOOM_DOWNLOAD_FILE_ENDPOINT);
+  console.log("ZOOM_DOWNLOAD_RECORDING_URL --- ", DOWNLOAD_URL_ENDPOINT);
   try {
     console.log("downloadUrl --- ", downloadUrl);
     // get transcript from zoom-request-handler with an axios request
-    const response = await axios.post(ZOOM_DOWNLOAD_FILE_ENDPOINT, {
+    const response = await axios.post(DOWNLOAD_URL_ENDPOINT, {
       downloadUrl,
       eventType: "download-recording-transcript",
     });

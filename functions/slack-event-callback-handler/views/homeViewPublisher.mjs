@@ -8,9 +8,9 @@ export const homeViewPublisher = async (userId, recordingsList) => {
 
   // Get the Slack Bot Token from AWS Secrets Manager
   const newToken = await getSecret("dev/slack-automation-app/slack-bot-token");
-  const SLACK_BOT_TOKEN = newToken.SLACK_BOT_TOKEN;
+  const BOT_USER_OAUTH_TOKEN = newToken.BOT_USER_OAUTH_TOKEN;
   // creeate a slack client
-  const slackClient = new WebClient(SLACK_BOT_TOKEN);
+  const slackClient = new WebClient(BOT_USER_OAUTH_TOKEN);
 
   try {
     console.log("publishing home view for user: ", userId);

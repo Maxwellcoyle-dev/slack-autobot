@@ -3,7 +3,8 @@ import { WebClient } from "@slack/web-api";
 
 import { getSecret } from "/opt/nodejs/utilities/getSecret.mjs";
 
-const TRANSCRIPT_HANDLER_URL = process.env.TRANSCRIPT_HANDLER_ENDPOINT;
+const TRANSCRIPT_HANDLER_ENDPOINT = process.env.TRANSCRIPT_HANDLER_ENDPOINT;
+const ENVIRONMENT = process.env.ENVIRONMENT;
 
 export const viewSubmissionHandler = async (payload) => {
   try {
@@ -12,15 +13,15 @@ export const viewSubmissionHandler = async (payload) => {
     const transcriptPayload = transcriptHandlerPayloadBuilder(payload);
 
     // Call the transcript handler
-    axios.post(TRANSCRIPT_HANDLER_URL, transcriptPayload);
+    axios.post(TRANSCRIPT_HANDLER_ENDPOINT, transcriptPayload);
 
     // Get the Slack Bot Token from AWS Secrets Manager
     const newToken = await getSecret(
-      "dev/slack-automation-app/slack-bot-token"
+      `slack-call-analyzer/bot-user-oauth-token/${ENVIRONMENT}`
     );
-    const SLACK_BOT_TOKEN = newToken.SLACK_BOT_TOKEN;
+    const BOT_USER_OAUTH_TOKEN = newToken.BOT_USER_OAUTH_TOKEN;
     // creeate a slack client with the bot token
-    const slackClient = new WebClient(SLACK_BOT_TOKEN);
+    const slackClient = new WebClient(BOT_USER_OAUTH_TOKEN);
 
     // Notify the user that processing has started
     await slackClient.chat

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const ZOOM_LIST_RECORDINGS_URL = process.env.ZOOM_LIST_RECORDINGS_ENDPOINT;
+const ZOOM_LIST_RECORDINGS_URL = process.env.LIST_RECORDINGS_ENDPOINT;
 
 // INOMING SCHEMA
 // {
