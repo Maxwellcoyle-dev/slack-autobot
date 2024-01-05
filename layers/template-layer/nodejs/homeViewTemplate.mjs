@@ -41,7 +41,7 @@ export const homeViewTemplate = (
       type: "header",
       text: {
         type: "plain_text",
-        text: "*Select a date range*",
+        text: "Select a date range",
         emoji: true,
       },
     },
@@ -49,7 +49,7 @@ export const homeViewTemplate = (
       type: "section",
       text: {
         type: "plain_text",
-        text: "*Choose the start and end dates for your search.*",
+        text: "Choose the start and end dates for your search.",
         emoji: true,
       },
     },
@@ -122,7 +122,7 @@ export const homeViewTemplate = (
           type: "section",
           text: {
             type: "plain_text",
-            text: `${formattedDate}`,
+            text: `${formattedDate} || ${meetingDuration} minutes`,
             emoji: true,
           },
         },
