@@ -109,11 +109,3 @@ Resources:
       CompatibleRuntimes:
         - nodejs18.x
       RetentionPolicy: Retain
-  AWSLayer:
-    Type: AWS::Serverless::LayerVersion
-    Properties:
-      LayerName: aws-layer
-      ContentUri: layers/aws-layer/
-      CompatibleRuntimes:
-        - nodejs18.x
-      RetentionPolicy: Retain

@@ -47,16 +47,29 @@ export const listUserRecordings = async (
     const recordingsTranscriptList = listRecordings.data.meetings
       .filter((meeting) => meeting.duration > 1) // Add this line to filter meetings
       .map((meeting) => {
+        // Parse the UTC date string
+        const utcDate = new Date(meeting.start_time);
+
+        // Format the date to the meeting's time zone
+        const timeZoneFormattedDate = new Intl.DateTimeFormat("en-US", {
+          year: "numeric",
+          month: "numeric",
+          day: "numeric",
+          hour: "numeric",
+          minute: "numeric",
+          timeZone: meeting.timezone,
+        }).format(utcDate);
+
         const recordingSchema = {
           meetingUuid: meeting.uuid,
           meetingTopic: meeting.topic,
-          meetingDate: meeting.start_time,
-          meetingTimeZone: meeting.timezone,
+          meetingDate: timeZoneFormattedDate,
           meetingDuration: meeting.duration,
           downloadUrl: meeting.recording_files.filter(
             (file) => file.file_extension === "VTT"
           )[0]?.download_url,
         };
+        console.log("recordingSchema --- ", recordingSchema);
         return recordingSchema;
       });
 
