@@ -26,7 +26,6 @@ export const blockActionHandler = async (payload) => {
   try {
     switch (actionType) {
       case "open_modal":
-        console.log("ACTION HANDLER - ACTION: open_modal");
         // get the actionValuePayload
         const actionValuePayload = JSON.parse(payload.actions[0].value);
         console.log("actionValuePayload --- ", actionValuePayload);
@@ -54,8 +53,6 @@ export const blockActionHandler = async (payload) => {
           }),
         };
       case "search_meeting_action":
-        console.log("ACTION HANDLER - ACTION: search-meeting-action");
-
         console.log("payload.state.values --- ", payload.view.state.values);
         // Retrieve the first key from the values object, assuming there's only one such key
         const outerKey = Object.keys(payload.view.state.values)[0];
@@ -73,6 +70,7 @@ export const blockActionHandler = async (payload) => {
         // use slack id to get user email for zoom api
         const slackUserId = payload.user.id;
         const slackUserEmail = await getUserEmail(slackUserId);
+
         const recordingsList = await axios.get(LIST_RECORDINGS_ENDPOINT, {
           params: {
             user_id: slackUserEmail,
