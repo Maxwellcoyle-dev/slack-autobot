@@ -7,10 +7,10 @@ Hi [client name] Team,
 [Start with a friendly intro, sumamrizing the email and thanking them for their time. Then, provide a summary of the call. Here is an example:]
 Thanks for another productive call today. We made good progress towards setting up this [integration type] integration. Below is a link to the call recording as well as some notes from the call and action items for next week's call.
 
-*Call Recording*
+Call Recording
 [recording link]
 
-*Notes*
+Notes
 {notes based on the call]
 Example notes
 Successfully used get requests to retrieve worker profile information using both the Workday REST Connector & the Workday Web Services Connector
@@ -61,7 +61,7 @@ Blockers or issues that remain unresolved
 key takeaways 
 `;
 
-export const callNotes = `Review and analyze this call. Provide detailed bullet point notes for the call for the important topics discussed in the call. please go into as much detail as you can. These notes will be used to update team memebers on the call and ensure that everyone understands the content and meat of the call. Skip over any small talk and greetings.`;
+export const callNotes = `Review and analyze this call. Provide detailed notes for the call for the important topics discussed in the call. please go into as much detail as you can. These notes will be used to update team memebers on the call and ensure that everyone understands the content and meat of the call. Skip over any small talk and greetings.`;
 
 export const hiveHealthReport = `For each week of a Docebo onboarding project, we need to write a brief health report that is posted in our project management tool. The health report is 2-5 sentences and its main goal is to provide a brief positive overview of the current progress and status of the project.The report should contain milestones achieved in this week's call, next steps that need to be completed in the coming weeks, and any roadblocks that might be present. Only mention roadblocks that are significant.
 
