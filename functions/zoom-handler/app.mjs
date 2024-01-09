@@ -66,8 +66,8 @@ export const lambdaHandler = async (event) => {
       case "list-user-recordings":
         console.log("LIST USER RECORDINGS - PAYLOAD --- ", payload);
         const userId = payload.user_id; // Variable to store the user_id
-        const fromDate = payload.from; // Variable to store the start_date
-        const toDate = payload.to; // Variable to store the end_date
+        const fromDate = payload?.from; // Variable to store the start_date
+        const toDate = payload?.to; // Variable to store the end_date
         // Call the listUserRecordings function
         const listUserRecordingResponse = await listUserRecordings(
           userId,

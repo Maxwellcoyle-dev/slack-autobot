@@ -1,7 +1,10 @@
-import { listRecordings } from "./utilities/listRecordings.mjs";
+import axios from "axios";
+
 import { getUserEmail } from "/opt/nodejs/utilities/getSlackUser.mjs";
 
 import { homeViewPublisher } from "./views/homeViewPublisher.mjs";
+
+const ZOOM_LIST_RECORDINGS_URL = process.env.LIST_RECORDINGS_ENDPOINT;
 
 export const lambdaHandler = async (event) => {
   try {
@@ -23,7 +26,15 @@ export const lambdaHandler = async (event) => {
     const slackUserId = eventPayload?.event?.user;
 
     const slackUserEmail = await getUserEmail(slackUserId);
-    const recordingsList = await listRecordings(slackUserEmail);
+
+    const recordingsList = await axios.get(ZOOM_LIST_RECORDINGS_URL, {
+      params: {
+        user_id: slackUserEmail,
+        from: undefined,
+        to: undefined,
+        eventType: "list-user-recordings",
+      },
+    });
 
     // Publish the home view
     const result = await homeViewPublisher(slackUserId, recordingsList);

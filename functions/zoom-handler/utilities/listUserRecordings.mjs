@@ -35,6 +35,7 @@ export const listUserRecordings = async (
       usersRequestConfig
     );
     console.log("raw recording data list --- ", listRecordings.data);
+    console.log("example of meetings ", listRecordings.data.meetings);
     console.log(
       "example of meetings[i].recording_files --- ",
       listRecordings.data.meetings[0].recording_files
@@ -45,12 +46,17 @@ export const listUserRecordings = async (
     );
 
     const recordingsTranscriptList = listRecordings.data.meetings
-      .filter((meeting) => meeting.duration > 1) // Add this line to filter meetings
+      .filter(
+        (meeting) =>
+          meeting.duration > 1 &&
+          meeting.recording_files.some((file) => file.file_extension === "VTT")
+      ) // Filter for duration and VTT file
       .map((meeting) => {
-        // Parse the UTC date string
-        const utcDate = new Date(meeting.start_time);
+        const vttFile = meeting.recording_files.find(
+          (file) => file.file_extension === "VTT"
+        );
 
-        // Format the date to the meeting's time zone
+        const utcDate = new Date(meeting.start_time);
         const timeZoneFormattedDate = new Intl.DateTimeFormat("en-US", {
           year: "numeric",
           month: "numeric",
@@ -65,9 +71,7 @@ export const listUserRecordings = async (
           meetingTopic: meeting.topic,
           meetingDate: timeZoneFormattedDate,
           meetingDuration: meeting.duration,
-          downloadUrl: meeting.recording_files.filter(
-            (file) => file.file_extension === "VTT"
-          )[0]?.download_url,
+          downloadUrl: vttFile?.download_url,
         };
         console.log("recordingSchema --- ", recordingSchema);
         return recordingSchema;
