@@ -56,6 +56,7 @@ export const listUserRecordings = async (
           (file) => file.file_extension === "VTT"
         );
 
+        const DEFAULT_TIMEZONE = "America/Denver";
         const utcDate = new Date(meeting.start_time);
         const timeZoneFormattedDate = new Intl.DateTimeFormat("en-US", {
           year: "numeric",
@@ -63,7 +64,7 @@ export const listUserRecordings = async (
           day: "numeric",
           hour: "numeric",
           minute: "numeric",
-          timeZone: meeting.timezone,
+          timeZone: meeting.timezone || DEFAULT_TIMEZONE,
         }).format(utcDate);
 
         const recordingSchema = {
