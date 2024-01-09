@@ -58,6 +58,9 @@ export const openAiAnalyzerChain = async (
       prompt: prompt,
     });
 
+    console.log("llmChain", llmChain);
+    console.log("prompt", prompt);
+
     const result = await llmChain.call({
       transcript: transcript,
       meetingTopic: meetingTopic,

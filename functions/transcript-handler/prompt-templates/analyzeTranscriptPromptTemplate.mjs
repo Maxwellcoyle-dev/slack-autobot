@@ -12,11 +12,13 @@ Here is the call transcript:
 Instructions:
 - Please be as thorough as possible. 
 - If you don't know something, do not make it up. Just let me know that you don't know or that somethig is unclear to you.
-- Leave out any unnessecary information.
 
 Formatting Instructions:
 - Provide the analysis in a Slack-friendly format. Use single asterisks (*) to denote bold text instead of double asterisks (**). Ensure that bullet points and sub-points are clearly formatted. Avoid using any special formatting that is not compatible with Slack's markdown syntax.
 
+- Leave out any unnessecary information.
+- Produce this for executive or team member review
+- Emmit any comments about formatting
 
 Assistant Response:
 `;
