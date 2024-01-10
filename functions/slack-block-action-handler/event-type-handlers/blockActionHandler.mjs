@@ -123,6 +123,11 @@ const slackModalPayloadBuilder = (eventPayload, actionValuePayload) => {
     actionValuePayload.downloadUrl
   );
 
+  console.log(
+    "actionValuePayload.meetingTopic --- ",
+    actionValuePayload.meetingTopic
+  );
+
   const slackModalPayload = {
     trigger_id: eventPayload.trigger_id,
     view: modalViewTemplate(

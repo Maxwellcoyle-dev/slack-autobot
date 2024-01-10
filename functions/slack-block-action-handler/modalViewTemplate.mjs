@@ -30,7 +30,7 @@ export const modalViewTemplate = (meetingUuid, meetingTopic, downloadUrl) => {
       type: "plain_text",
       text:
         meetingTopic.length > 25
-          ? `${meetingTopic.slice(0, 20)}...`
+          ? `${meetingTopic.slice(0, 18)}...`
           : meetingTopic,
     },
     submit: {
