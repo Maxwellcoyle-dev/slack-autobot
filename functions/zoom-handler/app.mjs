@@ -79,6 +79,10 @@ export const lambdaHandler = async (event) => {
           "LIST USER RECORDINGS - RESPONSE --- ",
           listUserRecordingResponse
         );
+        console.log(
+          "LIST USER RECORDINGS - RESPONSE COUNT --- ",
+          listUserRecordingResponse.length
+        );
 
         return {
           statusCode: 200,
